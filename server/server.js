@@ -1,5 +1,6 @@
 require('./config/config');
 
+const mongoose = require('mongoose');
 const express = require('express');
 const app = express();
 const bodyParser = require('body-parser');
@@ -7,24 +8,18 @@ const bodyParser = require('body-parser');
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
 
-app.get('/usuario', (req, res)=>{
-    res.json('get usuario');
-});
+app.use(require('./controller/usuarios'));
 
-app.post('/usuario', (req, res)=>{
-    let body = req.body;
-    res.json({body})
-});
+mongoose
+  .connect('mongodb://localhost:27017/cafe', {
+    useNewUrlParser: true,
+    useUnifiedTopology: true
+  })
+  .then(console.log('Base de datos Conectada...'))
+  .catch(err => {
+    console.log( err );
+  });
 
-app.put('/usuario/:id', (req, res)=>{
-    let id = req.params.id;
-    res.json({id});
-});
-
-app.delete('/usuario', (req, res)=>{
-    res.json('delete usuario')
-});
-
-app.listen(process.env.PORT, ()=>{
-    console.log('Escuchando puerto:', process.env.PORT);
+app.listen(process.env.PORT, () => {
+  console.log('Escuchando puerto:', process.env.PORT);
 });
