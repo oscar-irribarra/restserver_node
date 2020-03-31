@@ -36,23 +36,23 @@ app.post('/usuario', (req, res) => {
 
 app.put('/usuario/:id', (req, res) => {
   let id = req.params.id;
-  let body = _.pick(req.body, ['nombre','email','img','rol','estado']);
+  let body = _.pick(req.body, ['nombre', 'email', 'img', 'rol', 'estado']);
 
   Usuario.findByIdAndUpdate(
     id,
     body,
     { new: true, runValidators: true },
-    (err, usuarioDb) => { 
+    (err, usuarioDb) => {
       if (err) {
         return res.status(400).json({
           ok: false,
           err
         });
       }
-      
+
       res.json({
         ok: true,
-        usuarioDb
+        usuario: usuarioDb
       });
     }
   );
