@@ -13,11 +13,12 @@ app.use(require('./controller/usuarios'));
 mongoose
   .connect('mongodb://localhost:27017/cafe', {
     useNewUrlParser: true,
-    useUnifiedTopology: true
+    useCreateIndex: true,
+    useUnifiedTopology: true,
   })
   .then(console.log('Base de datos Conectada...'))
-  .catch(err => {
-    console.log( err );
+  .catch((err) => {
+    console.log(err);
   });
 
 app.listen(process.env.PORT, () => {
